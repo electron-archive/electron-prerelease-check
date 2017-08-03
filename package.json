@@ -1,0 +1,16 @@
+{
+  "name": "electron-release-precheck",
+  "private": true,
+  "bin": "cli.sh",
+  "version": "1.0.0",
+  "description": "Make sure an Electron release is ready before publishing",
+  "repository": "https://github.com/electron/electron-prerelease-check",
+  "author": "zeke",
+  "license": "MIT",
+  "dependencies": {
+    "chai": "^4.1.0",
+    "ghauth": "^3.2.1",
+    "github": "^9.2.0",
+    "mocha": "^3.5.0"
+  }
+}
