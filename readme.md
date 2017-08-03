@@ -1,4 +1,4 @@
-# electron-release-precheck 
+# electron-prerelease-check 
 
 Make sure an Electron release is ready before publishing
 

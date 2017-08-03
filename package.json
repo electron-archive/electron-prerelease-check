@@ -1,5 +1,5 @@
 {
-  "name": "electron-release-precheck",
+  "name": "electron-prerelease-check",
   "private": true,
   "bin": "cli.sh",
   "version": "1.0.0",
