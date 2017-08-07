@@ -4,20 +4,35 @@ const ghauth = require('ghauth')
 const GitHub = require('github')
 const pkg = require('./package.json')
 const filenames = require('./lib/filenames')
-const authOptions = {
-  configName: pkg.name, 
-  note: pkg.description,
-  scopes: ['repo']
-}
+
 let releases
 let drafts
 let draft
 
-describe('electron-prelease-check', () => {  
+function getToken () {
+  // ENV var used for other release-related stuff
+  if (process.env.ELECTRON_GITHUB_TOKEN) {
+    console.log('Using ELECTRON_GITHUB_TOKEN for prerelease check')
+    return Promise.resolve(process.env.ELECTRON_GITHUB_TOKEN)
+  }
+
+  // If ELECTRON_GITHUB_TOKEN is not set, prompt...
+  const authOptions = {
+    configName: pkg.name, 
+    note: pkg.description,
+    scopes: ['repo']
+  }
+  return ghauth(authOptions, function (err, authData) {
+    if (err) throw err
+    return Promise.resolve(authData)
+  })
+}
+
+describe('electron-prelease-check', () => {
   before(function(done) {
     this.timeout(90 * 1000) // allow plenty of time to log in
 
-    ghauth(authOptions, function (err, authData) {
+    getToken().then(token => {
       const github = new GitHub()
       github.authenticate({type: 'token', token: authData.token})
       github.repos.getReleases({owner: 'electron', repo: 'electron'})
